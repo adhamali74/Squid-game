@@ -25,6 +25,7 @@ const loader = new THREE.GLTFLoader();
 loader.load("../models/scene.gltf", function (gltf) {
   scene.add(gltf.scene);
   gltf.scene.scale.set(0.4, 0.4, 0.4);
+  gltf.scene.position.set(0, 0, 0);
 });
 
 function animate() {
