@@ -59,21 +59,29 @@ function createTrack() {
     0,
     0x537a5a
   ).position.z = -0.9;
-  createCube({ w: 0.2, h: 1.5, d: 1 }, startPosition, -0.7);
-  createCube({ w: 0.2, h: 1.5, d: 1 }, endPosition, 0.7);
+  createCube({ w: 0.2, h: 1.5, d: 1 }, startPosition, -0.3);
+  createCube({ w: 0.2, h: 1.5, d: 1 }, endPosition, 0.3);
 }
 createTrack();
 
 class Player {
   constructor() {
-    const geometry = new THREE.SphereGeometry(0.29, 32, 16);
-    const material = new THREE.MeshBasicMaterial({ color: 0xd8cc34 });
+    const geometry = new THREE.SphereGeometry(0.3, 32, 16);
+    const material = new THREE.MeshBasicMaterial({ color: 0x070707 });
     const sphere = new THREE.Mesh(geometry, material);
-    sphere.position.x = startPosition + 0.7;
+    sphere.position.x = startPosition;
     scene.add(sphere);
     this.player = sphere;
+    this.playerInfo = {
+      positionX: startPosition + 1,
+      velocity: 0,
+    };
   }
   run() {}
+  update() {
+    this.playerInfo.positionX -= this.playerInfo.velocity;
+    this.player.position.x = this.playerInfo.positionX;
+  }
 }
 const player = new Player();
 let doll = new Doll();
@@ -84,6 +92,7 @@ setTimeout(() => {
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+  player.update();
 }
 animate();
 window.addEventListener("resize", onWindowResize, false);
