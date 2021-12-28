@@ -17,8 +17,10 @@ renderer.setClearColor(0xb7c3f3, 1);
 const light = new THREE.AmbientLight(0xffffff); // soft white light
 scene.add(light);
 
-const startPosition = 5;
+const startPosition = 6;
 const endPosition = -startPosition;
+const text = document.querySelector(".text");
+const timeLimit = 10;
 
 function createCube(size, positionX, rotY = 0, color = 0x654f6f) {
   const geometry = new THREE.BoxGeometry(size.w, size.h, size.d);
@@ -30,9 +32,13 @@ function createCube(size, positionX, rotY = 0, color = 0x654f6f) {
   return cube;
 }
 
-camera.position.z = 5;
+camera.position.z = 5.2;
 
 const loader = new THREE.GLTFLoader();
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 class Doll {
   constructor() {
@@ -50,7 +56,32 @@ class Doll {
   lookForward() {
     gsap.to(this.doll.rotation, { y: 0, duration: 0.45 });
   }
+  async start() {
+    this.lookBackward();
+    await delay(Math.random() * 1000 + 1000);
+    this.lookForward();
+    await delay(Math.random() * 500 + 500);
+    this.start();
+  }
 }
+async function init() {
+  await delay(1000);
+  text.innerText = "Starting in 3";
+  await delay(2000);
+  text.innerText = "Starting in 2 .. Get Ready Dude";
+  await delay(3000);
+  text.innerText = "Starting in 1 .. Hold your breath";
+  await delay(4000);
+  text.innerText = "Eddelo";
+  startGame();
+}
+function startGame() {
+  let progressBar = createCube({ w: 15, h: 0.1, d: 1 }, 0);
+  progressBar.position.y = 3.73;
+  gsap.to(progressBar.scale, { x: 0, duration: timeLimit, ease: "none" });
+  doll.start();
+}
+init();
 
 function createTrack() {
   createCube(
@@ -66,7 +97,7 @@ createTrack();
 
 class Player {
   constructor() {
-    const geometry = new THREE.SphereGeometry(0.3, 32, 16);
+    const geometry = new THREE.SphereGeometry(0.28, 32, 3);
     const material = new THREE.MeshBasicMaterial({ color: 0x070707 });
     const sphere = new THREE.Mesh(geometry, material);
     sphere.position.x = startPosition;
@@ -77,7 +108,13 @@ class Player {
       velocity: 0,
     };
   }
-  run() {}
+  run() {
+    this.playerInfo.velocity = 0.02;
+  }
+  stop() {
+    // this.playerInfo.velocity = 0;
+    gsap.to(this.playerInfo, { velocity: 0, duration: 0.9 });
+  }
   update() {
     this.playerInfo.positionX -= this.playerInfo.velocity;
     this.player.position.x = this.playerInfo.positionX;
@@ -85,9 +122,9 @@ class Player {
 }
 const player = new Player();
 let doll = new Doll();
-setTimeout(() => {
-  doll.lookBackward();
-}, 1000);
+// setTimeout(() => {
+//   doll.start();
+// }, 1000);
 
 function animate() {
   requestAnimationFrame(animate);
@@ -102,3 +139,13 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
+window.addEventListener("keydown", (e) => {
+  if (e.key == "ArrowUp") {
+    player.run();
+  }
+});
+window.addEventListener("keyup", (e) => {
+  if (e.key == "ArrowUp") {
+    player.stop();
+  }
+});
