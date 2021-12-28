@@ -17,11 +17,17 @@ renderer.setClearColor(0xb7c3f3, 1);
 const light = new THREE.AmbientLight(0xffffff); // soft white light
 scene.add(light);
 
-function createCube() {
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const startPosition = 5;
+const endPosition = -startPosition;
+
+function createCube(size, positionX, rotY = 0, color = 0x654f6f) {
+  const geometry = new THREE.BoxGeometry(size.w, size.h, size.d);
+  const material = new THREE.MeshBasicMaterial({ color: color });
   const cube = new THREE.Mesh(geometry, material);
+  cube.position.x = positionX;
+  cube.rotation.y = rotY;
   scene.add(cube);
+  return cube;
 }
 
 camera.position.z = 5;
@@ -47,11 +53,29 @@ class Doll {
 }
 
 function createTrack() {
-  createCube();
+  createCube(
+    { w: startPosition * 2 + 0.5, h: 1.5, d: 1 },
+    0,
+    0,
+    0x537a5a
+  ).position.z = -0.9;
+  createCube({ w: 0.2, h: 1.5, d: 1 }, startPosition, -0.7);
+  createCube({ w: 0.2, h: 1.5, d: 1 }, endPosition, 0.7);
 }
-createTrack
+createTrack();
 
-
+class Player {
+  constructor() {
+    const geometry = new THREE.SphereGeometry(0.29, 32, 16);
+    const material = new THREE.MeshBasicMaterial({ color: 0xd8cc34 });
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.position.x = startPosition + 0.7;
+    scene.add(sphere);
+    this.player = sphere;
+  }
+  run() {}
+}
+const player = new Player();
 let doll = new Doll();
 setTimeout(() => {
   doll.lookBackward();
