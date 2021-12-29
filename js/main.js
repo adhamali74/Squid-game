@@ -67,7 +67,7 @@ class Doll {
     await delay(Math.random() * 500 + 500);
     this.start();
   }
-}
+} 
 async function init() {
   await delay(1000);
   text.innerText = "Starting in 3";
