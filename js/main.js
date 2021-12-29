@@ -20,7 +20,7 @@ scene.add(light);
 const startPosition = 6;
 const endPosition = -startPosition;
 const text = document.querySelector(".text");
-const timeLimit = 3;
+const timeLimit = 50;
 let gameStatus = "loading";
 let dollIsLookingBackward = "true";
 
@@ -76,7 +76,7 @@ async function init() {
   await delay(1500);
   text.innerText = "Starting in 1 .. Hold your breath";
   await delay(3000);
-  text.innerText = "Eddelo";
+  text.innerText = "yalla";
   startGame();
 }
 function startGame() {
@@ -140,6 +140,17 @@ class Player {
     if (this.playerInfo.positionX < endPosition) {
       text.innerText = "Winner Winner!";
       gameStatus = "over";
+    }
+    if (this.playerInfo.positionX < endPosition + 6) {
+      text.innerText = "Gamed .. Continue!";
+
+      if (this.playerInfo.positionX < endPosition) {
+        text.innerText = "Winner Winner!";
+        gameStatus = "over";
+      } else if (this.playerInfo.velocity > 0 && !dollIsLookingBackward) {
+        text.innerText = "Looser!";
+        gameStatus = "over";
+      }
     }
   }
 }
