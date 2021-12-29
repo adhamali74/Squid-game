@@ -131,7 +131,7 @@ class Player {
     this.check();
     this.playerInfo.positionX -= this.playerInfo.velocity;
     this.player.position.x = this.playerInfo.positionX;
-  }
+  } 
   check() {
     if (this.playerInfo.velocity > 0 && !dollIsLookingBackward) {
       text.innerText = "Looser!";
