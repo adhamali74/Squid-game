@@ -44,12 +44,15 @@ function delay(ms) {
 
 class Doll {
   constructor() {
-    loader.load("../models/scene.gltf", (gltf) => {
-      scene.add(gltf.scene);
-      gltf.scene.scale.set(0.4, 0.4, 0.4);
-      gltf.scene.position.set(0, -1, 0);
-      this.doll = gltf.scene;
-    });
+    loader.load(
+      "https://raw.githubusercontent.com/adhamali74/Squid-game/main/models/scene.gltf",
+      (gltf) => {
+        scene.add(gltf.scene);
+        gltf.scene.scale.set(0.4, 0.4, 0.4);
+        gltf.scene.position.set(0, -1, 0);
+        this.doll = gltf.scene;
+      }
+    );
   }
   lookBackward() {
     // this.doll.rotation.y = -3.15;
@@ -67,7 +70,7 @@ class Doll {
     await delay(Math.random() * 500 + 500);
     this.start();
   }
-}  
+}
 async function init() {
   await delay(1000);
   text.innerText = "Starting in 3";
