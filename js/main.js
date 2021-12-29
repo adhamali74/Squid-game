@@ -20,7 +20,7 @@ scene.add(light);
 const startPosition = 6;
 const endPosition = -startPosition;
 const text = document.querySelector(".text");
-const timeLimit = 10;
+const timeLimit = 20;
 let gameStatus = "loading";
 let dollIsLookingBackward = "true";
 
@@ -54,11 +54,11 @@ class Doll {
   lookBackward() {
     // this.doll.rotation.y = -3.15;
     gsap.to(this.doll.rotation, { y: -3.15, duration: 0.45 });
-    setTimeout(() => (dollIsLookingBackward = true), 450);
+    setTimeout(() => (dollIsLookingBackward = true), 150);
   }
   lookForward() {
     gsap.to(this.doll.rotation, { y: 0, duration: 0.45 });
-    setTimeout(() => (dollIsLookingBackward = false), 150);
+    setTimeout(() => (dollIsLookingBackward = false), 450);
   }
   async start() {
     this.lookBackward();
@@ -71,17 +71,17 @@ class Doll {
 async function init() {
   await delay(1000);
   text.innerText = "Starting in 3";
-  await delay(2000);
+  await delay(1000);
   text.innerText = "Starting in 2 .. Get Ready Dude";
-  await delay(3000);
+  await delay(1500);
   text.innerText = "Starting in 1 .. Hold your breath";
-  await delay(4000);
+  await delay(3000);
   text.innerText = "Eddelo";
   startGame();
 }
 function startGame() {
   gameStatus = "started";
-  let progressBar = createCube({ w: 15, h: 0.1, d: 1 }, 0);
+  let progressBar = createCube({ w: 16, h: 0.1, d: 1 }, 0);
   progressBar.position.y = 3.73;
   gsap.to(progressBar.scale, { x: 0, duration: timeLimit, ease: "none" });
   doll.start();
@@ -118,14 +118,23 @@ class Player {
   }
   stop() {
     // this.playerInfo.velocity = 0;
-    gsap.to(this.playerInfo, { velocity: 0, duration: 0.9 });
+    gsap.to(this.playerInfo, { velocity: 0, duration: 0.8 });
   }
   update() {
     this.check();
     this.playerInfo.positionX -= this.playerInfo.velocity;
     this.player.position.x = this.playerInfo.positionX;
   }
-  check() {}
+  check() {
+    if (this.playerInfo.velocity > 0 && !dollIsLookingBackward) {
+      text.innerText = "Looser!";
+      gameStatus = "over";
+    }
+    if (this.playerInfo.positionX < endPosition) {
+      text.innerText = "Winner Winner!";
+      gameStatus = "over";
+    }
+  }
 }
 const player = new Player();
 let doll = new Doll();
@@ -134,6 +143,7 @@ let doll = new Doll();
 // }, 1000);
 
 function animate() {
+  if (gameStatus == "over") return;
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   player.update();
