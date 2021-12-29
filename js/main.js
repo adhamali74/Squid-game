@@ -20,7 +20,7 @@ scene.add(light);
 const startPosition = 6;
 const endPosition = -startPosition;
 const text = document.querySelector(".text");
-const timeLimit = 20;
+const timeLimit = 3;
 let gameStatus = "loading";
 let dollIsLookingBackward = "true";
 
@@ -85,7 +85,14 @@ function startGame() {
   progressBar.position.y = 3.73;
   gsap.to(progressBar.scale, { x: 0, duration: timeLimit, ease: "none" });
   doll.start();
+  setTimeout(() => {
+    if (gameStatus != "over") {
+      text.innerText = "time is over! .. Good luck in Next time ";
+      gameStatus = "over";
+    }
+  }, timeLimit * 1000);
 }
+
 init();
 
 function createTrack() {
