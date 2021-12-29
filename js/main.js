@@ -44,15 +44,12 @@ function delay(ms) {
 
 class Doll {
   constructor() {
-    loader.load(
-      "https://raw.githubusercontent.com/adhamali74/Squid-game/main/models/scene.gltf",
-      (gltf) => {
-        scene.add(gltf.scene);
-        gltf.scene.scale.set(0.4, 0.4, 0.4);
-        gltf.scene.position.set(0, -1, 0);
-        this.doll = gltf.scene;
-      }
-    );
+    loader.load("../models/scene.gltf", (gltf) => {
+      scene.add(gltf.scene);
+      gltf.scene.scale.set(0.4, 0.4, 0.4);
+      gltf.scene.position.set(0, -1, 0);
+      this.doll = gltf.scene;
+    });
   }
   lookBackward() {
     // this.doll.rotation.y = -3.15;
