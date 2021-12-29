@@ -72,11 +72,11 @@ async function init() {
   await delay(1000);
   text.innerText = "Starting in 3";
   await delay(1000);
-  text.innerText = "Starting in 2 .. Get Ready Dude";
+  text.innerText = "Starting in 2 ";
   await delay(1500);
-  text.innerText = "Starting in 1 .. Hold your breath";
+  text.innerText = "Starting in 1 .. ";
   await delay(3000);
-  text.innerText = "yalla";
+  text.innerText = "El3ab Warrehom";
   startGame();
 }
 function startGame() {
@@ -131,7 +131,7 @@ class Player {
     this.check();
     this.playerInfo.positionX -= this.playerInfo.velocity;
     this.player.position.x = this.playerInfo.positionX;
-  } 
+  }
   check() {
     if (this.playerInfo.velocity > 0 && !dollIsLookingBackward) {
       text.innerText = "Looser!";
