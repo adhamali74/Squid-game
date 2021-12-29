@@ -21,6 +21,8 @@ const startPosition = 6;
 const endPosition = -startPosition;
 const text = document.querySelector(".text");
 const timeLimit = 10;
+let gameStatus = "loading";
+let dollIsLookingBackward = "true";
 
 function createCube(size, positionX, rotY = 0, color = 0x654f6f) {
   const geometry = new THREE.BoxGeometry(size.w, size.h, size.d);
@@ -52,9 +54,11 @@ class Doll {
   lookBackward() {
     // this.doll.rotation.y = -3.15;
     gsap.to(this.doll.rotation, { y: -3.15, duration: 0.45 });
+    setTimeout(() => (dollIsLookingBackward = true), 450);
   }
   lookForward() {
     gsap.to(this.doll.rotation, { y: 0, duration: 0.45 });
+    setTimeout(() => (dollIsLookingBackward = false), 150);
   }
   async start() {
     this.lookBackward();
@@ -76,6 +80,7 @@ async function init() {
   startGame();
 }
 function startGame() {
+  gameStatus = "started";
   let progressBar = createCube({ w: 15, h: 0.1, d: 1 }, 0);
   progressBar.position.y = 3.73;
   gsap.to(progressBar.scale, { x: 0, duration: timeLimit, ease: "none" });
@@ -116,9 +121,11 @@ class Player {
     gsap.to(this.playerInfo, { velocity: 0, duration: 0.9 });
   }
   update() {
+    this.check();
     this.playerInfo.positionX -= this.playerInfo.velocity;
     this.player.position.x = this.playerInfo.positionX;
   }
+  check() {}
 }
 const player = new Player();
 let doll = new Doll();
@@ -140,6 +147,7 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener("keydown", (e) => {
+  if (gameStatus != "started") return;
   if (e.key == "ArrowUp") {
     player.run();
   }
