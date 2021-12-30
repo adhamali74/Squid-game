@@ -138,7 +138,7 @@ class Player {
   }
   check() {
     if (this.playerInfo.velocity > 0 && !dollIsLookingBackward) {
-      text.innerText = "Looser!";
+      text.innerText = "Loser!";
       gameStatus = "over";
     }
     if (this.playerInfo.positionX < endPosition) {
