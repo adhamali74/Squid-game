@@ -140,6 +140,8 @@ class Player {
     if (this.playerInfo.velocity > 0 && !dollIsLookingBackward) {
       text.innerText = "Loser!";
       gameStatus = "over";
+      id.innerHTML = "Dead!";
+      
     }
     if (this.playerInfo.positionX < endPosition) {
       text.innerText = "Winner Winner!";
@@ -152,7 +154,7 @@ class Player {
         text.innerText = "Winner Winner!";
         gameStatus = "over";
       } else if (this.playerInfo.velocity > 0 && !dollIsLookingBackward) {
-        text.innerText = "Looser!";
+        text.innerText = "Loser!";
         gameStatus = "over";
       }
     }
@@ -163,6 +165,25 @@ let doll = new Doll();
 // setTimeout(() => {
 //   doll.start();
 // }, 1000);
+
+var counter = 50;
+
+setInterval(async function () {
+  await delay(6500);
+  counter--;
+  if (counter >= 0) {
+    id = document.getElementById("count");
+    id.innerHTML = counter;
+  }
+
+  // if (( text.innerText = "")) {
+  //   id.innerHTML = "Dead!";
+  // }
+  if (counter === 0) {
+    id.innerHTML = "Dead!";
+    gameStatus = "over";
+  }
+}, 1000);
 
 function animate() {
   if (gameStatus == "over") return;
