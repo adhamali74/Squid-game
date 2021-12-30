@@ -7,7 +7,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
- 
+
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -91,7 +91,7 @@ function startGame() {
   doll.start();
   setTimeout(() => {
     if (gameStatus != "over") {
-      text.innerText = "time is over! .. Good luck in Next time ";
+      text.innerText = "time is over! .. Better Luck Next Time ";
       gameStatus = "over";
     }
   }, timeLimit * 1000);
