@@ -7,9 +7,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <title>50 sec count down timer</title>
+    <style type="text/css">
+      @font-face {
+        font-family: sevenSegment;
+        src: url(Seven-Segment.ttf);
+      }
+      h1 {
+        font-family: sevenSegment;
+        font-size: 5em;
+      }
+      .container {
+        position: fixed;
+        bottom: 80%;
+        color: darkred;
+      }
+    </style>
+
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <div class="container">
+      <h1 id="count">50</h1>
+    </div>
+    <script type="text/javascript">
+      var counter = 50;
+      setInterval(async function () {
+        await delay(6500);
+        counter--;
+        if (counter >= 0) {
+          id = document.getElementById("count");
+          id.innerHTML = counter;
+        }
+        if (counter === 0) {
+          id.innerHTML = "Dead!";
+        }
+      }, 1000);
+    </script>
+
     <p class="text">Loading...</p>
     <div class="instructions">Press Arrow Up to Move .. Release it to Stop</div>
     <div class="image">
