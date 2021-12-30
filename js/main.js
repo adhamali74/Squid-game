@@ -80,7 +80,7 @@ async function init() {
   await delay(1500);
   text.innerText = "Starting in 1 .. ";
   await delay(3000);
-  text.innerText = "El3ab Warrehom";
+  text.innerText = "Move!";
   startGame();
 }
 function startGame() {
