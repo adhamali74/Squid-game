@@ -71,6 +71,7 @@ class Doll {
     this.start();
   }
 }
+//doesn't happen at the same time so we need here to use async function <3
 async function init() {
   await delay(1000);
   text.innerText = "Starting in 3";
