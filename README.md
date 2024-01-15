@@ -1,4 +1,5 @@
 # Squid-game
+![Project Logo](https://www.freecodecamp.org/news/content/images/2021/11/squid-game-red-light-green-light.gif)
 # about the game:
 Conceptualized and developed a mobile game inspired by the Netflix series 'Squid Game,' incorporating a unique and dynamic gameplay mechanic.
 
